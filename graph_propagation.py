@@ -4,6 +4,8 @@ import numpy as np
 from measurements_transform import Open, Short
 from propagation_constant import Propagation_constant
 
+from theorical import beta
+
 fig = plt.figure(figsize=(12, 8))
 # Frequency1 = np.linspace(60000, 30000000, 501)
 #np.linespaceからnp.arangeに変更
@@ -23,6 +25,8 @@ def linear_transform(phase_constant):
     start_point = []
     end_point = []
     final_point = phase[-1]
+    
+    total_break_point = []
 
     for j in range(0, len(phase_constant)):
         # out of range対策
@@ -35,8 +39,8 @@ def linear_transform(phase_constant):
 
     between_phase = phase[phase.index(initial_point): phase.index(start_point[0])]
 
-    # print(between_phase)
     break_point = phase.index(start_point[0])
+    total_break_point.append(break_point)
     del Frequency_gamma[break_point]
 
     for m in range(len(end_point) - 1):
@@ -48,6 +52,7 @@ def linear_transform(phase_constant):
         between_phase.extend(between_start_end)
 
         break_point = phase.index(start_point[m+1])
+        total_break_point.append(break_point)
         del Frequency_gamma[break_point]
 
 
@@ -60,9 +65,10 @@ def linear_transform(phase_constant):
     
     phase = between_phase
     
-    return Frequency_gamma, phase
+    return Frequency_gamma, phase, total_break_point
 
-
+def delete_phase_constant_linear(phase_constant_linear):
+    pass
 
 open = Open("OPEN.CSV")
 open_complex_data = open.open_parameter()
@@ -80,34 +86,48 @@ phase_constant = propagation_constant[1]
 Frequency_gamma = linear_transform(phase_constant)[0]
 phase_constant_linear = linear_transform(phase_constant)[1]
 
+# linear_transform(phase_constant)[2]
 
-ax1 = fig.add_subplot(1, 2, 1)
-ax1.set_xlabel("(a)   Frequency [Hz]")
-ax1.set_ylabel("[Np/m]")
+deleted_phase_constant_linear = phase_constant_linear.copy()
 
-ax2 = fig.add_subplot(1, 2, 2)
-ax2.set_xlabel("(b)   Frequency [Hz]")
-ax2.set_ylabel("[rad/m]")
+for k in range(len(linear_transform(phase_constant)[2])):
+    del deleted_phase_constant_linear[linear_transform(phase_constant)[k]]
+    
+print(len(deleted_phase_constant_linear))
+    
+    
+# for k in range():
+#     val = np.sqrt(abs(phase_constant_linear - beta)**2)
+#     dist.append(val)
+
+# ax1 = fig.add_subplot(1, 2, 1)
+# ax1.set_xlabel("(a)   Frequency [Hz]")
+# ax1.set_ylabel("[Np/m]")
+
+# ax2 = fig.add_subplot(1, 2, 2)
+# ax2.set_xlabel("(b)   Frequency [Hz]")
+# ax2.set_ylabel("[rad/m]")
 
 
-ax1.plot(Frequency, damping_constant, color="red" )
-ax2.plot(Frequency, phase_constant, color="red")
-ax2.plot(Frequency_gamma, phase_constant_linear, color="blue")
+# ax1.plot(Frequency, damping_constant, color="red" )
+# ax2.plot(Frequency, phase_constant, color="red")
+# ax2.plot(Frequency_gamma, phase_constant_linear, color="blue")
+# ax2.plot(Frequency, beta, color="green")
 
-fig.tight_layout()
+# fig.tight_layout()
 
-ax1.ticklabel_format(style='plain',axis='x')
-ax2.ticklabel_format(style='plain',axis='x')
+# ax1.ticklabel_format(style='plain',axis='x')
+# ax2.ticklabel_format(style='plain',axis='x')
 
-ax1.xaxis.set_major_formatter(ScalarFormatter(useMathText=True))
-ax1.ticklabel_format(style="sci",  axis="x",scilimits=(6, 6))
-ax2.xaxis.set_major_formatter(ScalarFormatter(useMathText=True))
-ax2.ticklabel_format(style="sci",  axis="x",scilimits=(6, 6))
+# ax1.xaxis.set_major_formatter(ScalarFormatter(useMathText=True))
+# ax1.ticklabel_format(style="sci",  axis="x",scilimits=(6, 6))
+# ax2.xaxis.set_major_formatter(ScalarFormatter(useMathText=True))
+# ax2.ticklabel_format(style="sci",  axis="x",scilimits=(6, 6))
 
-ax1.set_xlim([60000, 30000000])
-ax2.set_xlim([60000, 30000000])
+# ax1.set_xlim([60000, 30000000])
+# ax2.set_xlim([60000, 30000000])
 
-x_formatter = ScalarFormatter(useOffset=False)
-ax1.yaxis.set_major_formatter(x_formatter)
+# x_formatter = ScalarFormatter(useOffset=False)
+# ax1.yaxis.set_major_formatter(x_formatter)
 
-plt.show()
+# plt.show()

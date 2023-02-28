@@ -27,10 +27,3 @@ class Characteristic_impedance:
         characteristic_impedance_imag = np.array(characteristic_impedance).imag
 
         return characteristic_impedance_real, characteristic_impedance_imag
-
-
-Characteristic_impedance_data = Characteristic_impedance(
-    open_complex_data[2], short_complex_data[2])
-
-data = Characteristic_impedance_data.characteristic_impedance()
-

@@ -36,6 +36,3 @@ class Propagation_constant:
 data = Propagation_constant(open_complex_data[2], short_complex_data[2], length)
 
 Data = data.propagation_constant()
-
-# print(Data[0])
-# print(Data[1])
