@@ -16,7 +16,7 @@ open_complex_data = open.open_parameter()
 short = Short("SHORT.CSV")
 short_complex_data = short.short_parameter()
 
-#　減衰定数 
+# 　減衰定数
 data = Propagation_constant(open_complex_data[2], short_complex_data[2], 10.8)
 
 propagation_constant = data.propagation_constant()
@@ -42,15 +42,15 @@ ax2 = fig.add_subplot(2, 1, 2)
 ax2.set_xlabel("Frequency [Hz]")
 ax2.set_ylabel("[Ω]")
 
-ax1.plot(Frequency, x.real, color="red", label="計算値")
-ax1.plot(Frequency, short_complex_data[0], color="blue", label="実測値")
-ax1.plot(Frequency, x.imag, color="red", label="計算値")
-ax1.plot(Frequency, short_complex_data[1], color="blue", label="実測値")
+ax1.plot(Frequency, x.real, color="red", label="calcuration wave")
+ax1.plot(Frequency, short_complex_data[0], color="blue", label="actual wave")
+ax1.plot(Frequency, x.imag, color="red", label="calcuration wave")
+ax1.plot(Frequency, short_complex_data[1], color="blue", label="actual wave")
 
-ax2.plot(Frequency, y.real, color="red", label="計算値")
-ax2.plot(Frequency, open_complex_data[0], color="blue", label="実測値")
-ax2.plot(Frequency, y.imag, color="red", label="計算値")
-ax2.plot(Frequency, open_complex_data[1], color="blue", label="実測値")
+ax2.plot(Frequency, y.real, color="red", label="calcuration wave")
+ax2.plot(Frequency, open_complex_data[0], color="blue", label="actual wave")
+ax2.plot(Frequency, y.imag, color="red", label="calcuration wave")
+ax2.plot(Frequency, open_complex_data[1], color="blue", label="actual wave")
 
 fig.tight_layout()
 
@@ -66,4 +66,18 @@ ax1.yaxis.set_major_formatter(x_formatter)
 
 ax1.legend(loc='lower left')  # 凡例
 
-plt.show()
+
+if __name__ == "__main__":
+    ax1.ticklabel_format(style='plain', axis='x')
+
+    ax1.xaxis.set_major_formatter(ScalarFormatter(useMathText=True))
+    ax1.ticklabel_format(style="sci",  axis="x", scilimits=(6, 6))
+
+    ax1.set_xlim([60000, 30000000])
+
+    x_formatter = ScalarFormatter(useOffset=False)
+    ax1.yaxis.set_major_formatter(x_formatter)
+
+    ax1.legend(loc='lower left')  # 凡例
+
+    plt.show()
