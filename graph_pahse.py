@@ -77,7 +77,6 @@ data = Propagation_constant(open_complex_data[2], short_complex_data[2], 10.8)
 
 propagation_constant = data.propagation_constant()
 
-damping_constant = propagation_constant[0]
 phase_constant = propagation_constant[1]
 
 Frequency_gamma = linear_transform(phase_constant)[0]

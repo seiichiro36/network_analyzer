@@ -1,3 +1,6 @@
+# 測定値から伝搬定数を求める。
+# Pdpagation_constantクラスの第1戻り値が減衰定数、第2戻り値が位相定数である。
+
 from measurements_transform import Open, Short
 import numpy as np
 
@@ -33,6 +36,6 @@ class Propagation_constant:
               
         return propagation_constant_real, propagation_constant_imag
     
-data = Propagation_constant(open_complex_data[2], short_complex_data[2], length)
+# data = Propagation_constant(open_complex_data[2], short_complex_data[2], length)
 
-Data = data.propagation_constant()
+# Data = data.propagation_constant()
