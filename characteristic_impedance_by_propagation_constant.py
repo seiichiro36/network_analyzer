@@ -1,4 +1,4 @@
-from Impedance_by_propagation_constant import x, y
+from Impedance_by_propagation_constant import x_actual, y_actual, x_lossless, y_lossless
 import matplotlib.pyplot  as plt
 import numpy as np 
 from characteristic_impedance import Characteristic_impedance
@@ -17,8 +17,11 @@ fig = plt.figure(figsize=(12, 8))
 # np.linespaceからnp.arangeに変更
 Frequency = np.arange(60000, 30000001, 59880)
 
+
+# TODO: 変数の名前
 characteristic_impedance = Characteristic_impedance(open_complex_data[2], short_complex_data[2])
-characteristic_impedance_by_gamma = Characteristic_impedance(x, y)
+characteristic_impedance_by_gamma_on_actual = Characteristic_impedance(x_actual, y_actual)
+characteristic_impedance_by_gamma_on_lossless = Characteristic_impedance(x_lossless, y_lossless)
 
 
 ax1 = fig.add_subplot(2, 1, 1)
@@ -30,11 +33,14 @@ ax2.set_xlabel("Frequency [Hz]")
 ax2.set_ylabel("[Ω]")
 
 
-ax1.plot(Frequency, characteristic_impedance_by_gamma.characteristic_impedance()[0], color="red", label="calcuration wave by gamma real")
-ax1.plot(Frequency, characteristic_impedance.characteristic_impedance()[0], color="blue", label="calcuration wave by gamma real")
+ax1.plot(Frequency, characteristic_impedance_by_gamma_on_actual.characteristic_impedance()[0], color="red", label="calcurated waveform by gamma real on actual", lw=5 )
+ax1.plot(Frequency, characteristic_impedance_by_gamma_on_lossless.characteristic_impedance()[0], color="blue", label="calcurated waveform by gamma real on lossless")
+ax1.plot(Frequency, characteristic_impedance.characteristic_impedance()[0], color="green", label="original waveform")
 
-ax2.plot(Frequency, characteristic_impedance_by_gamma.characteristic_impedance()[1], color="red", label="calcuration wave by gamma imag")
-ax2.plot(Frequency, characteristic_impedance.characteristic_impedance()[1], color="blue", label="calcuration wave by gamma imag")
+ax2.plot(Frequency, characteristic_impedance_by_gamma_on_actual.characteristic_impedance()[1], color="red", label="calcurated waveform by gamma real on actual", lw=5)
+ax2.plot(Frequency, characteristic_impedance_by_gamma_on_lossless.characteristic_impedance()[1], color="blue", label="calcurated waveform by gamma real on lossless")
+ax2.plot(Frequency, characteristic_impedance.characteristic_impedance()[1], color="green", label="original waveform")
+
 
 fig.tight_layout()
 

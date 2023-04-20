@@ -3,6 +3,7 @@ from matplotlib.ticker import ScalarFormatter
 import numpy as np
 from measurements_transform import Open, Short
 from propagation_constant import Propagation_constant
+from characteristic_impedance import Characteristic_impedance
 
 
 
@@ -27,11 +28,17 @@ phase_constant = propagation_constant[1]
 
 propagation_constant = damping_constant + phase_constant * 1j
 
+# 短絡・解放した際の送電端インピーダンスより導出した特性インピーダンス
+characteristic_impedance = Characteristic_impedance(open_complex_data[2], short_complex_data[2])
+characteristic_impedance_complex = characteristic_impedance.characteristic_impedance()[0] + characteristic_impedance.characteristic_impedance()[1] * 1j
 
+x_actual = characteristic_impedance_complex * np.tanh((propagation_constant)*10.8)
 
-x = 50 * np.tanh((propagation_constant)*10.8)
+y_actual = characteristic_impedance_complex / (np.tanh((propagation_constant) * 10.8))
 
-y = 50 / (np.tanh((propagation_constant) * 10.8))
+x_lossless = 50 * np.tanh((propagation_constant)*10.8)
+
+y_lossless = 50 / (np.tanh((propagation_constant) * 10.8))
 
 
 if __name__ == "__main__":
