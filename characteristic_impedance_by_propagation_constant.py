@@ -26,20 +26,20 @@ characteristic_impedance_by_gamma_on_lossless = Characteristic_impedance(x_lossl
 
 ax1 = fig.add_subplot(2, 1, 1)
 ax1.set_xlabel("Frequency [Hz]")
-ax1.set_ylabel("[Ω]")
+ax1.set_ylabel("Characteristic Impedance real-part[Ω]")
 
 ax2 = fig.add_subplot(2, 1, 2)
 ax2.set_xlabel("Frequency [Hz]")
-ax2.set_ylabel("[Ω]")
+ax2.set_ylabel("Characteristic Impedance imag-part[Ω]")
 
 
-ax1.plot(Frequency, characteristic_impedance_by_gamma_on_actual.characteristic_impedance()[0], color="red", label="calcurated waveform by gamma real on actual", lw=5 )
+ax1.plot(Frequency, characteristic_impedance_by_gamma_on_actual.characteristic_impedance()[0], color="red", label="calcurated waveform by gamma real on actual" )
 ax1.plot(Frequency, characteristic_impedance_by_gamma_on_lossless.characteristic_impedance()[0], color="blue", label="calcurated waveform by gamma real on lossless")
-ax1.plot(Frequency, characteristic_impedance.characteristic_impedance()[0], color="green", label="original waveform")
+ax1.plot(Frequency, characteristic_impedance.characteristic_impedance()[0], color="green", label="original waveform", ls="dashed")
 
-ax2.plot(Frequency, characteristic_impedance_by_gamma_on_actual.characteristic_impedance()[1], color="red", label="calcurated waveform by gamma real on actual", lw=5)
+ax2.plot(Frequency, characteristic_impedance_by_gamma_on_actual.characteristic_impedance()[1], color="red", label="calcurated waveform by gamma real on actual")
 ax2.plot(Frequency, characteristic_impedance_by_gamma_on_lossless.characteristic_impedance()[1], color="blue", label="calcurated waveform by gamma real on lossless")
-ax2.plot(Frequency, characteristic_impedance.characteristic_impedance()[1], color="green", label="original waveform")
+ax2.plot(Frequency, characteristic_impedance.characteristic_impedance()[1], color="green", label="original waveform", ls="dashed")
 
 
 fig.tight_layout()
@@ -63,4 +63,7 @@ ax1.yaxis.set_major_formatter(x_formatter)
 
 ax1.legend(loc='lower left')  # 凡例
 
+# plt.savefig('./figure/fig1.pdf')
+
 plt.show()
+

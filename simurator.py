@@ -2,7 +2,7 @@ import tkinter
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 from matplotlib.figure import Figure
 import numpy as np
-from actual_damping_characteristic import actual_data
+from actual_damping import actual_data
 import itertools
 
 

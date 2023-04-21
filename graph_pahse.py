@@ -6,7 +6,6 @@ from measurements_transform import Open, Short
 from propagation_constant import Propagation_constant
 from theorical import beta
 
-fig = plt.figure(figsize=(12, 8))
 # Frequency1 = np.linspace(60000, 30000000, 501)
 # np.linespaceからnp.arangeに変更
 Frequency = np.arange(60000, 30000001, 59880)
@@ -86,13 +85,8 @@ start_point = linear_transform(phase_constant)[3]
 
 end_point = linear_transform(phase_constant)[4]
 
-ax1 = fig.add_subplot(1, 2, 1)
-ax1.set_xlabel("(a)   Frequency [Hz]")
-ax1.set_ylabel("[Np/m]")
 
-ax2 = fig.add_subplot(1, 1, 1)
-ax2.set_xlabel("(b)   Frequency [Hz]")
-ax2.set_ylabel("[rad/m]")
+
 
 beta1 = beta[0: phase_constant.tolist().index(start_point[0])]
 Frequency1 = Frequency[0: phase_constant.tolist().index(start_point[0])]
@@ -110,36 +104,40 @@ beta4 = beta[phase_constant.tolist().index(start_point[2]): -1] - beta[phase_con
 ).index(start_point[2])] - beta[phase_constant.tolist().index(start_point[0])]
 Frequency4 = Frequency[phase_constant.tolist().index(start_point[2]): -1]
 
-# ax1.plot(Frequency, damping_constant, color="red")
-ax2.plot(Frequency, phase_constant, color="red", label="phase constant from actual data")
-ax2.plot(Frequency_gamma, phase_constant_linear, color="hotpink")
-ax2.plot(Frequency, beta, color="green")
 
-ax2.plot(Frequency1, beta1, color="blue", label="phase constant from the form (1)")
-ax2.plot(Frequency2, beta2, color="blue")
-ax2.plot(Frequency3, beta3, color="blue")
-ax2.plot(Frequency4, beta4, color="blue")
+beta = beta1.tolist() + beta2.tolist() + beta3.tolist() + beta4.tolist()
+Frequency_aa = Frequency1.tolist() + Frequency2.tolist() + Frequency3.tolist() + Frequency4.tolist()
+
+if __name__== "__main__":
+    fig = plt.figure(figsize=(12, 8))
+    
+    ax2 = fig.add_subplot(1, 1, 1)
+    ax2.set_xlabel("(b)   Frequency [Hz]")
+    ax2.set_ylabel("[rad/m]")
+    
+    ax2.plot(Frequency, phase_constant, color="red", label="phase constant from actual data")
+    ax2.plot(Frequency_gamma, phase_constant_linear, color="hotpink")
+    ax2.plot(Frequency, beta, color="green")
+
+    ax2.plot(Frequency1, beta1, color="blue", label="phase constant from the form (1)")
+    ax2.plot(Frequency2, beta2, color="blue")
+    ax2.plot(Frequency3, beta3, color="blue")
+    ax2.plot(Frequency4, beta4, color="blue")
 
 
-fig.tight_layout()
+    fig.tight_layout()
 
-ax1.ticklabel_format(style='plain', axis='x')
-ax2.ticklabel_format(style='plain', axis='x')
+    ax2.ticklabel_format(style='plain', axis='x')
 
-ax1.xaxis.set_major_formatter(ScalarFormatter(useMathText=True))
-ax1.ticklabel_format(style="sci",  axis="x", scilimits=(6, 6))
-ax2.xaxis.set_major_formatter(ScalarFormatter(useMathText=True))
-ax2.ticklabel_format(style="sci",  axis="x", scilimits=(6, 6))
+    ax2.xaxis.set_major_formatter(ScalarFormatter(useMathText=True))
+    ax2.ticklabel_format(style="sci",  axis="x", scilimits=(6, 6))
+    
+    ax2.set_xlim([60000, 30000000])
+    
+    x_formatter = ScalarFormatter(useOffset=False)
+    
+    ax2.legend(loc='lower left')  # 凡例
 
-ax1.set_xlim([60000, 30000000])
-ax2.set_xlim([60000, 30000000])
+    plt.show()
 
-x_formatter = ScalarFormatter(useOffset=False)
-ax1.yaxis.set_major_formatter(x_formatter)
-
-ax1.legend(loc='lower left')  # 凡例
-ax2.legend(loc='lower left')  # 凡例
-
-plt.show()
-
-# fig.savefig("./figure/phase.pdf")
+    # fig.savefig("./figure/phase.pdf")

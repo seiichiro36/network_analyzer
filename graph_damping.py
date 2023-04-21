@@ -3,7 +3,7 @@ from matplotlib.ticker import ScalarFormatter
 import numpy as np
 from measurements_transform import Open, Short
 from propagation_constant import Propagation_constant
-from actual_damping_characteristic import actual_data
+from actual_damping import actual_data
 
 fig = plt.figure(figsize=(12, 8))
 # Frequency1 = np.linspace(60000, 30000000, 501)
