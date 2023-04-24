@@ -4,7 +4,7 @@ import numpy as np
 
 from measurements_transform import Open, Short
 from propagation_constant import Propagation_constant
-from theorical import beta
+from theoretical import beta
 
 # Frequency1 = np.linspace(60000, 30000000, 501)
 # np.linespaceからnp.arangeに変更
